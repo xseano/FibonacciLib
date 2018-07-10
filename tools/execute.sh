@@ -3,6 +3,7 @@
 SRC_FILE=${1:-$((-1))}
 BUILD_DIR=${1:-$((-1))}
 BUILD_NAME=${1:-$((-1))}
+LINKER_LIBRARY=${1:-$((-1))}
 
 OPERATION=${1:-$((-1))}
 
@@ -36,8 +37,22 @@ if [ "$OPERATION" = "build" ];
     clang++ -g -Wall $SRC_FILE -o $BUILD_DIR/$BUILD_NAME
 elif [ "$OPERATION" = "run" ];
  then
-    echo "Running $SRC_FILE now..."
-    clang++ -g -Wall $SRC_FILE -o $BUILD_DIR/$BUILD_NAME && $BUILD_DIR/$BUILD_NAME
+    
+    if [ "$LINKER_LIBRARY" -eq "-1" ];
+     then
+        read -p "(optional) Library Path (ie. ./FibonacciLib.so): " LINKER_LIBRARY
+        LINKER_LIBRARY=${LINKER_LIBRARY}
+    fi
+
+    if [ "$LINKER_LIBRARY" != "" ];
+     then
+        echo "Running $SRC_FILE with library: $LINKER_LIBRARY"
+        clang++ $LINKER_LIBRARY -g -Wall $SRC_FILE -o $BUILD_DIR/$BUILD_NAME && $BUILD_DIR/$BUILD_NAME
+    else
+        echo "Running $SRC_FILE now..."
+        clang++ -g -Wall $SRC_FILE -o $BUILD_DIR/$BUILD_NAME && $BUILD_DIR/$BUILD_NAME
+    fi
+    
 else
     echo "No valid option chosen, running $SRC_FILE now..."
     clang++ -g -Wall $SRC_FILE -o $BUILD_DIR/$BUILD_NAME && $BUILD_DIR/$BUILD_NAME
