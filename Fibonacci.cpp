@@ -5,8 +5,14 @@ using namespace std;
 
 int main()
 {
-	Fibonacci fib_val(1);
-    int val = fib_val.getFibonacciVal(9);
+	Fibonacci fibVal(1);
+
+    cout << "Enter a sequence value: ";
+    int seqVal;
+    cin >> seqVal;
+
+    int val = fibVal.getFibonacciVal(seqVal);
     cout << val << endl;
+    
     return 0;
 }
