@@ -3,9 +3,11 @@
 
 using namespace std;
 
+#define STARTVAL 1
+
 int main()
 {
-	Fibonacci fibVal(1);
+	Fibonacci fibVal(STARTVAL);
 
     cout << "Enter a sequence value: ";
     int seqVal;
